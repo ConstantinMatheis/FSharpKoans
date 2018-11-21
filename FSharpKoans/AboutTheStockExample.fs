@@ -58,8 +58,28 @@ module ``about the stock example`` =
     // tests for yourself along the way. You can also try 
     // using the F# Interactive window to check your progress.
 
+    let toDouble str = 
+        System.Double.Parse(str, System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture) 
+    let splitCommas (x:string) =
+        x.Split([|','|])
+    let greatestDifference (stockData:list<string>) = 
+        stockData
+        |> Seq.skip 1
+        |> Seq.map (fun line -> splitCommas line)
+        |> Seq.map (fun entries -> (entries.[0], abs(toDouble(entries.[1]) - toDouble(entries.[4]))))
+        |> Seq.maxBy (fun tuple -> snd tuple)
+        |> fst
+
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
-        
+        let result =  greatestDifference stockData
+
         AssertEquality "2012-03-13" result
+
+
+
+    
+    
+    
+
+   
